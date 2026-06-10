@@ -39,6 +39,8 @@ Stationery Sales System
             
 <input type="number" step="0.01" name="cost" placeholder="Cost" required="required" />
             
+<input type="date" name="purchase_date" placeholder="Purchase Date" required="required" />
+            
 <button type="submit">
 Save Purchase
 </button>
@@ -52,13 +54,15 @@ Save Purchase
         
 <h2>Add Sale</h2>
 
-<form action="sale.php" method="post">
+<form action="sales.php" method="post">
             
 <input type="text" name="item_name" placeholder="Item Name" required="required" />
             
 <input type="number" name="quantity" placeholder="Quantity" required="required" />
             
 <input type="number" step="0.01" name="price" placeholder="Selling Price" required="required" />
+            
+<input type="date" name="sale_date" placeholder="Sale Date" required="required" />
             
 <button type="submit">Save Sale</button>
         
@@ -75,6 +79,8 @@ Save Purchase
 <input type="text" name="description" placeholder="Expense Description" required="required" />
             
 <input type="number" step="0.01" name="amount" placeholder="Amount" required="required" />
+            
+<input type="date" name="expense_date" placeholder="Expense Date" required="required" />
             
 <button type="submit">Save Expense</button>
         
