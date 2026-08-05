@@ -1,96 +1,128 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    
-<title>
-Stationery Sales System
-</title>
-    
-<link rel="stylesheet" type="text/css" href="style.css" />
-    
-<script type="text/javascript" src="script.js">
-</script>
+    <title>Stationery Sales System</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        /* Simple two-column layout: left nav, right content */
+        .layout { display: flex; gap: 20px; max-width: 1000px; margin: 20px auto; }
+        .nav { width: 200px; }
+        .nav ul { list-style: none; padding: 0; }
+        .nav li { margin: 8px 0; }
+        .nav a { display: block; padding: 8px 12px; background: #f2f2f2; color: #333; text-decoration: none; border-radius: 4px; }
+        .nav a.active { background: #4CAF50; color: white; }
+        .content { flex: 1; }
+        .card { display: none; background: #fff; padding: 16px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .card.active { display: block; }
+        @media (max-width: 700px) { .layout { flex-direction: column; padding: 0 12px; } .nav { width: auto; } }
+    </style>
+    <script type="text/javascript">
+        function showSection(id, el) {
+            // hide all cards
+            var cards = document.getElementsByClassName('card');
+            for (var i = 0; i < cards.length; i++) {
+                cards[i].classList.remove('active');
+            }
+            // remove active class from nav links
+            var links = document.querySelectorAll('.nav a');
+            for (var i = 0; i < links.length; i++) {
+                links[i].classList.remove('active');
+            }
+            // show requested card
+            var card = document.getElementById(id);
+            if (card) card.classList.add('active');
+            // mark the clicked link active
+            if (el) el.classList.add('active');
+        }
 
+        // Show purchase form by default on load
+        window.onload = function() {
+            var firstLink = document.querySelector('.nav a');
+            if (firstLink) {
+                showSection(firstLink.getAttribute('data-target'), firstLink);
+            }
+        };
+    </script>
 </head>
 
-
 <body>
-
-
 <div class="container">
-    
-<h1>Stationery Sales System</h1>
+    <h1>Stationery Sales System</h1>
 
-    
-<div class="card">
-        
-<h2>Add Purchase</h2>
+    <div class="layout">
+        <nav class="nav" aria-label="Main navigation">
+            <ul>
+                <li><a href="javascript:void(0)" data-target="purchaseCard" onclick="showSection('purchaseCard', this)">Add Purchase</a></li>
+                <li><a href="javascript:void(0)" data-target="saleCard" onclick="showSection('saleCard', this)">Add Sale</a></li>
+                <li><a href="javascript:void(0)" data-target="expenseCard" onclick="showSection('expenseCard', this)">Add Expense</a></li>
+                <li><a href="javascript:void(0)" data-target="reportCard" onclick="showSection('reportCard', this)">View Report</a></li>
+            </ul>
+        </nav>
 
-        
-<form action="purchase.php" method="post">
-            
-<input type="text" name="item_name" placeholder="Item Name" required="required" />
-            
-<input type="number" name="quantity" placeholder="Quantity" required="required" />
-            
-<input type="number" step="0.01" name="cost" placeholder="Cost" required="required" />
-            
-<input type="date" name="purchase_date" placeholder="Purchase Date" required="required" />
-            
-<button type="submit">
-Save Purchase
-</button>
-        
-</form>
-    
-</div>
+        <main class="content">
+            <section id="purchaseCard" class="card" aria-labelledby="purchaseHeading">
+                <h2 id="purchaseHeading">Add Purchase</h2>
+                <form action="purchase.php" method="post">
+                    <input type="text" name="item_name" placeholder="Item Name" required="required" />
+                    <br />
+                    <input type="number" name="quantity" placeholder="Quantity" required="required" />
+                    <br />
+                    <input type="number" step="0.01" name="cost" placeholder="Cost" required="required" />
+                    <br />
+                    <input type="date" name="purchase_date" placeholder="Purchase Date" required="required" />
+                    <br />
+                    <button type="submit">Save Purchase</button>
+                </form>
+            </section>
 
-    
-<div class="card">
-        
-<h2>Add Sale</h2>
+            <section id="saleCard" class="card" aria-labelledby="saleHeading">
+                <h2 id="saleHeading">Add Sale</h2>
+                <form action="sales.php" method="post">
+                    <input type="text" name="item_name" placeholder="Item Name" required="required" />
+                    <br />
+                    <input type="number" name="quantity" placeholder="Quantity" required="required" />
+                    <br />
+                    <input type="number" step="0.01" name="price" placeholder="Selling Price" required="required" />
+                    <br />
+                    <input type="date" name="sale_date" placeholder="Sale Date" required="required" />
+                    <br />
+                    <button type="submit">Save Sale</button>
+                </form>
+            </section>
 
-<form action="sales.php" method="post">
-            
-<input type="text" name="item_name" placeholder="Item Name" required="required" />
-            
-<input type="number" name="quantity" placeholder="Quantity" required="required" />
-            
-<input type="number" step="0.01" name="price" placeholder="Selling Price" required="required" />
-            
-<input type="date" name="sale_date" placeholder="Sale Date" required="required" />
-            
-<button type="submit">Save Sale</button>
-        
-</form>
+            <section id="expenseCard" class="card" aria-labelledby="expenseHeading">
+                <h2 id="expenseHeading">Add Expense</h2>
+                <form action="expense.php" method="post">
+                    <input type="text" name="description" placeholder="Expense Description" required="required" />
+                    <br />
+                    <input type="number" step="0.01" name="amount" placeholder="Amount" required="required" />
+                    <br />
+                    <input type="date" name="expense_date" placeholder="Expense Date" required="required" />
+                    <br />
+                    <button type="submit">Save Expense</button>
+                </form>
+            </section>
+
+            <section id="reportCard" class="card" aria-labelledby="reportHeading">
+                <h2 id="reportHeading">View Report</h2>
+                <p>Choose a date range to view totals and profit/loss.</p>
+                <form action="report.php" method="get">
+                    <label for="start_date">Start date:</label>
+                    <input type="date" id="start_date" name="start_date" />
+                    <br />
+                    <label for="end_date">End date:</label>
+                    <input type="date" id="end_date" name="end_date" />
+                    <br />
+                    <button type="submit">Generate Report</button>
+                </form>
+            </section>
+        </main>
     </div>
-
-    <div class="card">
-        
-<h2>Add Expense</h2>
-
-        
-<form action="expense.php" method="post">
-            
-<input type="text" name="description" placeholder="Expense Description" required="required" />
-            
-<input type="number" step="0.01" name="amount" placeholder="Amount" required="required" />
-            
-<input type="date" name="expense_date" placeholder="Expense Date" required="required" />
-            
-<button type="submit">Save Expense</button>
-        
-</form>
-    
 </div>
-
-</div>
-
-
 </body>
 
 </html>
